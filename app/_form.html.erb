@@ -1,0 +1,50 @@
+<% if media_item.errors.any? %>
+  <section class="message" role="alert" aria-labelledby="form-errors">
+    <h2 id="form-errors">入力内容を確認してください</h2>
+    <ul>
+      <% media_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+    <p>今回アップロードするファイルは選び直してください。すでに保存済みのファイルは残っています。</p>
+  </section>
+<% end %>
+
+<%= form_with model: media_item, local: true, multipart: true, data: { turbo: false } do |form| %>
+  <div class="field">
+    <%= form.label :title, "タイトル（必須）" %>
+    <%= form.text_field :title, required: true, maxlength: 100 %>
+  </div>
+  <div class="field">
+    <%= form.label :creator, "作者・アーティスト（必須）" %>
+    <%= form.text_field :creator, required: true, maxlength: 100 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "説明" %>
+    <%= form.text_area :description, rows: 5, maxlength: 2000 %>
+  </div>
+
+  <p>画像・音楽のどちらか1つ以上を登録してください。両方の登録もできます。</p>
+  <div class="field">
+    <%= form.label :image_upload, "画像（PNG・JPEG・GIF・WebP／5MB以下）" %>
+    <%= form.file_field :image_upload, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+    <% if media_item.persisted? && media_item.image_name_in_database.present? %>
+      <p>保存済み：<%= media_item.image_name_in_database %></p>
+      <label class="checkbox-label">
+        <%= form.check_box :remove_image %> 保存済みの画像を削除する
+      </label>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :music_upload, "音楽（MP3・WAV／10MB以下）" %>
+    <%= form.file_field :music_upload, accept: ".mp3,.wav,audio/mpeg,audio/wav,audio/x-wav" %>
+    <% if media_item.persisted? && media_item.music_name_in_database.present? %>
+      <p>保存済み：<%= media_item.music_name_in_database %></p>
+      <label class="checkbox-label">
+        <%= form.check_box :remove_music %> 保存済みの音楽を削除する
+      </label>
+    <% end %>
+  </div>
+  <p class="help">編集時にファイルを選び直さなければ、保存済みのファイルを維持します。</p>
+  <p><%= form.submit(media_item.persisted? ? "更新する" : "登録する") %></p>
+<% end %>

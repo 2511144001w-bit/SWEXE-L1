@@ -1,0 +1,49 @@
+<h1><%= @media_item.title %></h1>
+<dl>
+  <dt>作者・アーティスト</dt>
+  <dd><%= @media_item.creator %></dd>
+  <dt>説明</dt>
+  <dd>
+    <% if @media_item.description.present? %>
+      <div class="description"><%= @media_item.description %></div>
+    <% else %>
+      説明はありません。
+    <% end %>
+  </dd>
+</dl>
+
+<section aria-labelledby="image-heading">
+  <h2 id="image-heading">画像</h2>
+  <% if @media_item.image_attached? %>
+    <p><%= @media_item.image_name %></p>
+    <%= image_tag media_item_path(@media_item, file: "image"),
+                  alt: @media_item.title, class: "preview-image" %>
+  <% else %>
+    <p>画像は登録されていません。</p>
+  <% end %>
+</section>
+
+<section aria-labelledby="music-heading">
+  <h2 id="music-heading">音楽</h2>
+  <% if @media_item.music_attached? %>
+    <p><%= @media_item.music_name %></p>
+    <audio controls preload="metadata" aria-label="登録した音楽の再生">
+      <source src="<%= media_item_path(@media_item, file: "music") %>"
+              type="<%= @media_item.music_content_type %>">
+      お使いのブラウザーは音楽の再生に対応していません。
+    </audio>
+  <% else %>
+    <p>音楽は登録されていません。</p>
+  <% end %>
+</section>
+
+<p class="actions">
+  <%= link_to "編集する", edit_media_item_path(@media_item) %>
+  <%= link_to "一覧に戻る", media_items_path %>
+</p>
+<details class="delete-panel">
+  <summary>この作品を削除する</summary>
+  <p>作品と、登録した画像・音楽を削除します。元に戻せません。</p>
+  <%= button_to "削除を確定する", media_item_path(@media_item), method: :delete,
+                form: { data: { turbo: false } } %>
+</details>

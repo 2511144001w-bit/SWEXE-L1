@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    models:
+      media_item: "作品"
+    attributes:
+      media_item:
+        title: "タイトル"
+        creator: "作者・アーティスト"
+        description: "説明"

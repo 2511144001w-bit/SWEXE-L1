@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>画像・音楽管理</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "media_crud" %>
+  </head>
+  <body>
+    <header>
+      <p class="site-title">画像・音楽管理</p>
+      <nav aria-label="メインメニュー">
+        <%= link_to "一覧", media_items_path %>
+        <%= link_to "新規登録", new_media_item_path %>
+      </nav>
+    </header>
+    <main>
+      <% if notice.present? %>
+        <p class="message" role="status"><%= notice %></p>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

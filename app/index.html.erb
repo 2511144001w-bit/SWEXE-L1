@@ -1,0 +1,35 @@
+<h1>作品一覧</h1>
+<p>画像や音楽を登録・確認・編集・削除できます。</p>
+<p><%= link_to "新しく登録する", new_media_item_path %></p>
+
+<% if @media_items.empty? %>
+  <p>まだ登録されていません。「新しく登録する」から追加してください。</p>
+<% else %>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">タイトル</th>
+          <th scope="col">作者・アーティスト</th>
+          <th scope="col">画像</th>
+          <th scope="col">音楽</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @media_items.each do |item| %>
+          <tr>
+            <td><%= link_to item.title, media_item_path(item) %></td>
+            <td><%= item.creator %></td>
+            <td><%= item.image_attached? ? "あり" : "なし" %></td>
+            <td><%= item.music_attached? ? "あり" : "なし" %></td>
+            <td class="actions">
+              <%= link_to "詳細", media_item_path(item) %>
+              <%= link_to "編集", edit_media_item_path(item) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

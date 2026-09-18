@@ -1,0 +1,11 @@
+Ruby syntax: 9 files OK
+ERB structure: 6 templates OK (Rails block-output tags normalized for syntax only)
+Installer: fresh project, 19 extracted files, routes, backup, preserved existing files OK
+Installer: duplicate installation safely refused without modifying files
+Installer: existing root route preserved
+Installer: filename conflict safely refused
+Installer: existing model safely refused
+Installer: non-Rails directory safely refused
+16 range-parser cases OK; exactly seven controller-defined public actions
+Rails tests supplied: {'media_items_controller_test.rb': 20, 'media_item_test.rb': 15} (not executed: Rails gems unavailable)
+Rails boot, Active Record persistence, full request tests, and browser playback: NOT executed in creation environment
