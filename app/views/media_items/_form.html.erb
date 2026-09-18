@@ -1,0 +1,20 @@
+<%= form_with model: media_item, local: true, multipart: true, data: { turbo: false } do |form| %>
+  <p>
+    <%= form.label :title, "タイトル" %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :creator, "作者" %>
+    <%= form.text_field :creator %>
+  </p>
+  <p>
+    <%= form.label :description, "説明" %>
+    <%= form.text_area :description, rows: 4 %>
+  </p>
+  <p>
+    <%= form.label :upload, "画像ファイル" %>
+    <%= form.file_field :upload, accept: "image/*" %>
+  </p>
+  <p>編集時に画像を選ばなければ、元の画像を残します。</p>
+  <%= form.submit(media_item.persisted? ? "更新する" : "登録する") %>
+<% end %>

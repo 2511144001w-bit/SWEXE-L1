@@ -1,0 +1,15 @@
+<h1><%= @media_item.title %></h1>
+<p>作者：<%= @media_item.creator %></p>
+<p>説明：</p>
+<p class="description"><%= @media_item.description %></p>
+<p>ファイル名：<%= @media_item.file_name %></p>
+
+<% if @media_item.file_data.present? %>
+  <%= image_tag media_item_path(@media_item, file: "1"), alt: @media_item.title, class: "preview" %>
+<% end %>
+
+<p>
+  <%= link_to "編集", edit_media_item_path(@media_item) %>
+  <%= link_to "一覧に戻る", media_items_path %>
+</p>
+<%= button_to "削除", media_item_path(@media_item), method: :delete %>

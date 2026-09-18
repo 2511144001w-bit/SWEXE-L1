@@ -1,0 +1,25 @@
+<h1>画像一覧</h1>
+<p><%= link_to "新規登録", new_media_item_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>作者</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @media_items.each do |item| %>
+      <tr>
+        <td><%= item.title %></td>
+        <td><%= item.creator %></td>
+        <td>
+          <%= link_to "詳細", media_item_path(item) %>
+          <%= link_to "編集", edit_media_item_path(item) %>
+          <%= button_to "削除", media_item_path(item), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

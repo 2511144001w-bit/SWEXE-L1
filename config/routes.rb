@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # 画像・音楽管理: resources による7機能
+  resources :media_items
+  root "media_items#index"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
