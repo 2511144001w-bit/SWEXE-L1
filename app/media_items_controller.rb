@@ -2,7 +2,7 @@ class MediaItemsController < ApplicationController
   layout "media_crud"
   before_action :set_media_item, only: %i[show edit update destroy]
 
-  # 1. 一覧表示（大きい画像・音楽データは一覧のSQLでは読み込みません）
+  # 1. 一覧表示
   def index
     @media_items = MediaItem.select(
       :id, :title, :creator, :image_name, :music_name, :created_at, :updated_at
@@ -29,7 +29,7 @@ class MediaItemsController < ApplicationController
   def show
     case params[:file]
     when nil
-      # 通常は show.html.erb を表示します。
+      # 通常は show.html.erb を表示
     when "image"
       send_media(:image)
     when "music"
@@ -52,7 +52,7 @@ class MediaItemsController < ApplicationController
     end
   end
 
-  # 7. 削除処理（画像・音楽本体も同じレコードなので一緒に削除されます）
+  # 7. 削除処理
   def destroy
     @media_item.destroy!
     redirect_to media_items_path, notice: "削除しました。", status: :see_other
@@ -65,7 +65,7 @@ class MediaItemsController < ApplicationController
   end
 
   def media_item_params
-    # Rails 8 の Strong Parameters。保存を許すフォーム項目だけを列挙します。
+    # Rails 8 の Strong Parameters。
     params.expect(media_item: [
       :title, :creator, :description,
       :image_upload, :music_upload, :remove_image, :remove_music
@@ -99,8 +99,7 @@ class MediaItemsController < ApplicationController
     end
   end
 
-  # 音楽プレーヤーのシーク用に、単一の byte Range 要求に対応します。
-  # 複数範囲・不明な形式は範囲指定を無視して全体を返します。
+  
   def requested_range(size)
     return nil if request.headers["If-Range"].present?
 

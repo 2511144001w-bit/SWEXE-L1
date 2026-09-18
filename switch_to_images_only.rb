@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-# 導入済みのMediaItemアプリを画像専用に変更する。
-# Gemfileと同じ階層で ruby switch_to_images_only.rb を実行する。
-# DB・マイグレーション・ルーティング・開発環境設定は変更しない。
 require "json"
 require "fileutils"
 

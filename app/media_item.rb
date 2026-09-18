@@ -1,14 +1,12 @@
 require "marcel"
 
-# このアプリで作成するモデルは、この MediaItem だけです。
-# 小規模な授業課題用として、画像・音楽の本体も同じテーブルに保存します。
 class MediaItem < ApplicationRecord
   IMAGE_TYPES = %w[image/png image/jpeg image/gif image/webp].freeze
   MUSIC_TYPES = %w[audio/mpeg audio/wav audio/x-wav audio/vnd.wave].freeze
   IMAGE_LIMIT = 5.megabytes
   MUSIC_LIMIT = 10.megabytes
 
-  # アップロードと削除チェックはフォーム用の一時的な値です。
+  
   attr_accessor :image_upload, :music_upload, :remove_image, :remove_music
 
   before_validation :apply_file_changes
@@ -59,7 +57,7 @@ class MediaItem < ApplicationRecord
       return
     end
 
-    # 拡張子やブラウザーが申告する種類だけを信用せず、本体から種類を調べます。
+    # 拡張子やブラウザーが申告する種類だけを信用せず、本体から種類を調べる
     upload.tempfile.rewind
     content_type = Marcel::MimeType.for(upload.tempfile)
     unless allowed_types.include?(content_type)
@@ -75,7 +73,7 @@ class MediaItem < ApplicationRecord
       return
     end
 
-    # ファイル名は表示用。利用者のファイル名をサーバーの保存先には使いません。
+    # ファイル名は表示用。
     name = File.basename(upload.original_filename.to_s.tr("\\", "/"))
                .delete("\x00").gsub(/[\r\n]/, "_").first(200)
     name = kind.to_s if name.blank?
