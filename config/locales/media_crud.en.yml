@@ -7,3 +7,6 @@ en:
         title: "タイトル"
         creator: "作者・アーティスト"
         description: "説明"
+        upload: "画像ファイル"
+  errors:
+    format: "%{attribute}%{message}"

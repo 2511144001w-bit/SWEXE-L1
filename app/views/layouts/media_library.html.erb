@@ -9,6 +9,23 @@
     <%= stylesheet_link_tag "media_library" %>
   </head>
   <body>
-    <%= yield %>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <%= link_to "画像管理", media_items_path, class: "site-brand" %>
+        <nav aria-label="メインメニュー">
+          <%= link_to "一覧", media_items_path %>
+          <%= link_to "新規登録", new_media_item_path %>
+        </nav>
+      </div>
+    </header>
+    <main class="main-content">
+      <% if flash[:notice].present? %>
+        <p class="flash flash--notice" role="status"><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:alert].present? %>
+        <p class="flash flash--alert" role="alert"><%= flash[:alert] %></p>
+      <% end %>
+      <%= yield %>
+    </main>
   </body>
 </html>

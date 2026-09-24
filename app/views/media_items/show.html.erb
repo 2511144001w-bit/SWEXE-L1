@@ -1,15 +1,45 @@
-<h1><%= @media_item.title %></h1>
-<p>作者：<%= @media_item.creator %></p>
-<p>説明：</p>
-<p class="description"><%= @media_item.description %></p>
-<p>ファイル名：<%= @media_item.file_name %></p>
+<div class="page-heading page-heading--detail">
+  <div>
+    <p class="eyebrow">画像の詳細</p>
+    <h1><%= @media_item.title %></h1>
+  </div>
+  <%= link_to "一覧に戻る", media_items_path, class: "secondary-link" %>
+</div>
 
-<% if @media_item.file_data.present? %>
-  <%= image_tag media_item_path(@media_item, file: "1"), alt: @media_item.title, class: "preview" %>
-<% end %>
+<article class="detail-card">
+  <div class="detail-card__meta">
+    <div>
+      <span class="meta-label">作者</span>
+      <strong><%= @media_item.creator %></strong>
+    </div>
+    <div>
+      <% posted_at = @media_item.created_at.in_time_zone("Asia/Tokyo") %>
+      <span class="meta-label">投稿日時</span>
+      <time class="detail-time" datetime="<%= @media_item.created_at.iso8601 %>">
+        <%= posted_at.strftime("%Y年%-m月%-d日 %H:%M") %> 日本時間
+      </time>
+    </div>
+  </div>
 
-<p>
-  <%= link_to "編集", edit_media_item_path(@media_item) %>
-  <%= link_to "一覧に戻る", media_items_path %>
-</p>
-<%= button_to "削除", media_item_path(@media_item), method: :delete %>
+  <% if @media_item.file_data.present? %>
+    <div class="detail-card__image">
+      <%= image_tag media_item_path(@media_item, file: "1"), alt: @media_item.title, class: "preview" %>
+    </div>
+  <% end %>
+
+  <% if @media_item.description.present? %>
+    <section class="detail-section">
+      <h2>説明</h2>
+      <p class="description"><%= @media_item.description %></p>
+    </section>
+  <% end %>
+
+  <% if @media_item.file_name.present? %>
+    <p class="file-name">ファイル名：<%= @media_item.file_name %></p>
+  <% end %>
+</article>
+
+<div class="detail-actions">
+  <%= link_to "編集", edit_media_item_path(@media_item), class: "primary-link" %>
+  <%= button_to "削除", media_item_path(@media_item), method: :delete, class: "text-button text-button--danger" %>
+</div>

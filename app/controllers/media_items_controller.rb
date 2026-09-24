@@ -1,5 +1,7 @@
 class MediaItemsController < ApplicationController
   layout "media_library"
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::ParameterMissing, with: :render_invalid_request
   before_action :set_media_item, only: %i[show edit update destroy]
 
   def index
@@ -12,35 +14,52 @@ class MediaItemsController < ApplicationController
 
   def create
     @media_item = MediaItem.new(media_item_params)
-    @media_item.save!
-    redirect_to @media_item, status: :see_other
+    if @media_item.save
+      redirect_to @media_item, notice: "登録しました。", status: :see_other
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
-    # 詳細ページに埋め込む画像も、このshowアクションから返す。
-    if params[:file] == "1"
-      response.headers["Content-Security-Policy"] = "sandbox; default-src 'none'"
-      send_data @media_item.file_data,
-                filename: @media_item.file_name,
-                type: @media_item.content_type,
-                disposition: "inline"
-    end
+    return if params[:file].blank?
+    return head :not_found unless params[:file] == "1" && @media_item.file_data.present?
+
+    response.headers["Content-Security-Policy"] = "sandbox; default-src 'none'"
+    send_data @media_item.file_data,
+              filename: @media_item.file_name,
+              type: @media_item.content_type,
+              disposition: "inline"
   end
 
   def edit
   end
 
   def update
-    @media_item.update!(media_item_params)
-    redirect_to @media_item, status: :see_other
+    if @media_item.update(media_item_params)
+      redirect_to @media_item, notice: "更新しました。", status: :see_other
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @media_item.destroy!
-    redirect_to media_items_path, status: :see_other
+    if @media_item.destroy
+      redirect_to media_items_path, notice: "削除しました。", status: :see_other
+    else
+      redirect_to @media_item, alert: "削除できませんでした。", status: :see_other
+    end
   end
 
   private
+
+  def render_not_found
+    render file: Rails.root.join("public/404.html"), status: :not_found, layout: false
+  end
+
+  def render_invalid_request
+    render file: Rails.root.join("public/422.html"), status: :unprocessable_entity, layout: false
+  end
 
   def set_media_item
     @media_item = MediaItem.find(params[:id])

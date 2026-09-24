@@ -1,25 +1,47 @@
-<h1>画像一覧</h1>
-<p><%= link_to "新規登録", new_media_item_path %></p>
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">画像ライブラリ</p>
+    <h1>画像一覧</h1>
+  </div>
+  <%= link_to "新規登録", new_media_item_path, class: "primary-link" %>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>タイトル</th>
-      <th>作者</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @media_items.each do |item| %>
-      <tr>
-        <td><%= item.title %></td>
-        <td><%= item.creator %></td>
-        <td>
-          <%= link_to "詳細", media_item_path(item) %>
-          <%= link_to "編集", edit_media_item_path(item) %>
-          <%= button_to "削除", media_item_path(item), method: :delete %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @media_items.any? %>
+  <div class="table-wrapper">
+    <table class="media-table">
+      <thead>
+        <tr>
+          <th scope="col">タイトル</th>
+          <th scope="col">作者</th>
+          <th scope="col">投稿日時</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @media_items.each do |item| %>
+          <% posted_at = item.created_at.in_time_zone("Asia/Tokyo") %>
+          <tr>
+            <td class="media-title"><%= link_to item.title, media_item_path(item) %></td>
+            <td><%= item.creator %></td>
+            <td>
+              <time class="posted-time" datetime="<%= item.created_at.iso8601 %>">
+                <span class="posted-time__date"><%= posted_at.strftime("%Y.%m.%d") %></span>
+                <span class="posted-time__hour"><%= posted_at.strftime("%H:%M") %> 日本時間</span>
+              </time>
+            </td>
+            <td class="row-actions">
+              <%= link_to "詳細", media_item_path(item) %>
+              <%= link_to "編集", edit_media_item_path(item) %>
+              <%= button_to "削除", media_item_path(item), method: :delete, class: "text-button text-button--danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <p>まだ画像が登録されていません。</p>
+    <%= link_to "最初の画像を登録", new_media_item_path, class: "primary-link" %>
+  </div>
+<% end %>
