@@ -33,6 +33,8 @@ production:
     password: <%= ENV['MYSITE_DATABASE_PASSWORD'] %>
     url: <%= ENV['DATABASE_URL'] %>
     <<: *primary_production
+  cache:
+    <<: *primary_production
   queue:
     <<: *primary_production
   cable:
