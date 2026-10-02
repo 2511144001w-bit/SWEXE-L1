@@ -28,6 +28,10 @@ production:
     adapter: postgresql
     encoding: unicode
     pool: 5
+    database: mysite_mid9
+    username: mysite_mid9_user
+    password: <%= ENV['6ePNqDteU4FIBllhsrNYieGzXOQkdSnj'] %>
+    url: <%= ENV['postgresql://mysite_mid9_user:6ePNqDteU4FIBllhsrNYieGzXOQkdSnj@dpg-davhh77avr4c73c1qmg0-a/mysite_mid9'] %>
   cache:
     <<: *primary_production
   queue:
