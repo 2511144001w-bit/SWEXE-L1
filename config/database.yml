@@ -23,18 +23,14 @@ test:
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
-  primary:
+  primary: &primary_production
     <<: *default
-    database: storage/production.sqlite3
+    adapter: postgresql
+    encoding: unicode
+    pool: 5
   cache:
-    <<: *default
-    database: storage/production_cache.sqlite3
-    migrations_paths: db/cache_migrate
+    <<: *primary_production
   queue:
-    <<: *default
-    database: storage/production_queue.sqlite3
-    migrations_paths: db/queue_migrate
+    <<: *primary_production
   cable:
-    <<: *default
-    database: storage/production_cable.sqlite3
-    migrations_paths: db/cable_migrate
+    <<: *primary_production
