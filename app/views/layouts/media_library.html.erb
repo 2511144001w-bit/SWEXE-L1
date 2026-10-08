@@ -18,14 +18,31 @@
         </nav>
       </div>
     </header>
-    <main class="main-content">
-      <% if flash[:notice].present? %>
-        <p class="flash flash--notice" role="status"><%= flash[:notice] %></p>
-      <% end %>
-      <% if flash[:alert].present? %>
-        <p class="flash flash--alert" role="alert"><%= flash[:alert] %></p>
-      <% end %>
-      <%= yield %>
-    </main>
+    <!-- 追加 -->
+    <div class="site-layout">
+      <main class="main-content">
+        <% if flash[:notice].present? %>
+          <p class="flash flash--notice" role="status"><%= flash[:notice] %></p>
+        <% end %>
+        <% if flash[:alert].present? %>
+          <p class="flash flash--alert" role="alert"><%= flash[:alert] %></p>
+        <% end %>
+        <%= yield %>
+      </main>
+      <!-- 追加 -->
+      <aside class="site-sidebar" aria-label="画像管理の案内">
+        <h2>メニュー</h2>
+        <nav aria-label="サイドメニュー">
+          <%= link_to "画像一覧", media_items_path %>
+          <%= link_to "画像を登録", new_media_item_path %>
+        </nav>
+        <h2>使い方</h2>
+        <p>タイトル・作者・説明と画像を登録し、一覧から詳細の確認や編集ができます。</p>
+      </aside>
+    </div>
+    <!-- 追加 -->
+    <footer class="site-footer">
+      <p>画像管理 — 作品を登録して、見つけやすく。</p>
+    </footer>
   </body>
 </html>
