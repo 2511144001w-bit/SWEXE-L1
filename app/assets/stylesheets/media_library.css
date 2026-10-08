@@ -13,6 +13,7 @@
 
 body {
   margin: 0;
+  /* 追加 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,6 +41,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .site-header nav a { color: #41516a; font-size: .9rem; font-weight: 700; text-decoration: none; }
 .site-header nav a:hover, .site-brand:hover { color: var(--accent); }
 
+/* 追加 */
 .site-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 208px;
@@ -154,6 +156,7 @@ form:not(.button_to) { max-width: 720px; margin-top: 26px; padding: 30px; border
 .form-errors p { margin: 0 0 6px; font-weight: 700; }
 .form-errors ul { margin: 0; padding-left: 1.3em; }
 
+/* 追加 */
 @media (max-width: 900px) {
   .site-layout { grid-template-columns: minmax(0, 1fr); }
 }
@@ -161,6 +164,7 @@ form:not(.button_to) { max-width: 720px; margin-top: 26px; padding: 30px; border
 @media (max-width: 680px) {
   .site-header__inner { padding: 0 16px; }
   .site-header nav { gap: 14px; }
+  /* 追加 */
   .site-layout { padding: 28px 16px 60px; }
   .page-heading { align-items: start; flex-direction: column; }
   .detail-card__meta, .detail-card__image, .detail-section { padding-left: 18px; padding-right: 18px; }
