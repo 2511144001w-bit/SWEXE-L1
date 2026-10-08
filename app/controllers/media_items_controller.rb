@@ -15,6 +15,7 @@ class MediaItemsController < ApplicationController
   def create
     @media_item = MediaItem.new(media_item_params)
     if @media_item.save
+      # 追加
       redirect_to media_item_path(@media_item), notice: "登録しました。", status: :see_other
     else
       render :new, status: :unprocessable_entity
@@ -37,6 +38,7 @@ class MediaItemsController < ApplicationController
 
   def update
     if @media_item.update(media_item_params)
+      # 追加
       redirect_to media_item_path(@media_item), notice: "更新しました。", status: :see_other
     else
       render :edit, status: :unprocessable_entity
@@ -47,6 +49,7 @@ class MediaItemsController < ApplicationController
     if @media_item.destroy
       redirect_to media_items_path, notice: "削除しました。", status: :see_other
     else
+      # 追加
       redirect_to media_item_path(@media_item), alert: "削除できませんでした。", status: :see_other
     end
   end
